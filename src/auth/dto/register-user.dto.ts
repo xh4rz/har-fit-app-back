@@ -8,23 +8,28 @@ import {
 } from 'class-validator';
 
 export class RegisterUserDto {
+  @ApiProperty({ example: 'John Doe', minLength: 10 })
+  @IsString()
+  @MinLength(10)
+  @MaxLength(50)
+  @Matches(/^[A-Za-z\s]+$/)
+  fullName: string;
+
   @ApiProperty({ example: 'user@example.com' })
   @IsString()
   @IsEmail()
   email: string;
 
-  @ApiProperty({ example: 'Password1', minLength: 6, maxLength: 50 })
+  @ApiProperty({ example: 'Password1', minLength: 6, maxLength: 20 })
   @IsString()
   @MinLength(6)
-  @MaxLength(50)
-  @Matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message:
-      'The password must have a Uppercase, lowercase letter and a number',
-  })
+  @MaxLength(20)
+  @Matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]+$/,
+    {
+      message:
+        'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character',
+    },
+  )
   password: string;
-
-  @ApiProperty({ example: 'John Doe', minLength: 1 })
-  @IsString()
-  @MinLength(1)
-  fullName: string;
 }

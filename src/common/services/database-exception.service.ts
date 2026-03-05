@@ -12,7 +12,15 @@ export class DatabaseExceptionService {
   handleDBExceptions(error: any): never {
     // Error de violación de constraint único (PostgreSQL)
     if (error.code === '23505') {
-      throw new BadRequestException(error.detail);
+      const detail: string = error.detail || '';
+
+      if (detail.includes('email')) {
+        const match = detail.match(/\(email\)=\(([^)]+)\)/);
+        const email = match?.[1] ?? null;
+        throw new BadRequestException(`Email ${email} is already registered`);
+      }
+
+      throw new BadRequestException(detail);
     }
 
     // Error de violación de foreign key

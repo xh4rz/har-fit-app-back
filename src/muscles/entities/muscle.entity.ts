@@ -9,6 +9,9 @@ export class Muscle {
   @Column('text')
   name: string;
 
+  @Column('text')
+  imageUrl: string;
+
   @OneToMany(() => Exercise, (exercise) => exercise.primaryMuscle)
   primaryExercises: Exercise[];
 

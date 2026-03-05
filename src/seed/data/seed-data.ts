@@ -39,6 +39,7 @@ type MuscleName =
   | 'All Muscles'
   | 'Abdominals'
   | 'Abductors'
+  | 'Adductors'
   | 'Biceps'
   | 'Calves'
   | 'Cardio'
@@ -67,11 +68,13 @@ interface SeedData {
 interface SeedEquipment {
   id: number;
   name: EquipmentName;
+  imageUrl: string;
 }
 
 interface SeedMuscle {
   id: number;
   name: MuscleName;
+  imageUrl: string;
 }
 
 export const initialData: SeedData = {
@@ -79,13 +82,13 @@ export const initialData: SeedData = {
     {
       email: 'harold@gmail.com',
       fullName: 'Harold Gonzalez',
-      password: bcrypt.hashSync('Abc123', 10),
+      password: bcrypt.hashSync('-Abc123', 10),
       roles: ['admin'],
     },
     {
       email: 'olga@google.com',
       fullName: 'Olga Mancipe',
-      password: bcrypt.hashSync('Abc123', 10),
+      password: bcrypt.hashSync('-Abc123', 10),
       roles: ['user'],
     },
   ],
@@ -136,124 +139,190 @@ export const initialData: SeedData = {
     {
       id: 1,
       name: 'All Equipment',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772693553/equipments/all-equipment_taoc85.png',
     },
     {
       id: 2,
       name: 'Barbell',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772693310/equipments/barbell_olehyd.png',
     },
     {
       id: 3,
       name: 'Dumbbell',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772693310/equipments/dumbell_n2ra3r.png',
     },
     {
       id: 4,
       name: 'Kettlebell',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772693310/equipments/kettlebell_od1utr.png',
     },
     {
       id: 5,
       name: 'Machine',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772693310/equipments/machine_eb5aug.png',
     },
     {
       id: 6,
       name: 'Plate',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772693311/equipments/plate_hioyiu.png',
     },
     {
       id: 7,
       name: 'Resistance Band',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772693311/equipments/resistance-band_tagf7h.png',
     },
     {
       id: 8,
       name: 'Suspension Band',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772693311/equipments/suspension-band_wtgib6.png',
     },
     {
       id: 9,
       name: 'None',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772693310/equipments/none_jynbcc.png',
     },
     {
       id: 10,
       name: 'Other',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772693549/equipments/other_jflkow.png',
     },
   ],
   muscles: [
     {
       id: 1,
       name: 'All Muscles',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772616053/muscles/all-muscles_yquqgg.png',
     },
     {
       id: 2,
       name: 'Abdominals',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610230/muscles/abdominals_rua0rn.webp',
     },
     {
       id: 3,
       name: 'Abductors',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610231/muscles/abductors_bgghtj.webp',
     },
     {
       id: 4,
-      name: 'Biceps',
+      name: 'Adductors',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610230/muscles/adductors_bgmrp0.webp',
     },
     {
       id: 5,
-      name: 'Calves',
+      name: 'Biceps',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610220/muscles/biceps_ytlpoo.webp',
     },
     {
       id: 6,
-      name: 'Cardio',
+      name: 'Calves',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610228/muscles/calves_c7v8lu.jpg',
     },
     {
       id: 7,
-      name: 'Chest',
+      name: 'Cardio',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772611569/muscles/cardio_xz4isc.webp',
     },
     {
       id: 8,
-      name: 'Forearms',
+      name: 'Chest',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610227/muscles/chest_dxugnm.webp',
     },
     {
       id: 9,
-      name: 'Full Body',
+      name: 'Forearms',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610227/muscles/forearms_unxw0s.webp',
     },
     {
       id: 10,
-      name: 'Glutes',
+      name: 'Full Body',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610226/muscles/fullbody_hn8m5d.webp',
     },
     {
       id: 11,
-      name: 'Hamstrings',
+      name: 'Glutes',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610229/muscles/glutes_idig1o.webp',
     },
     {
       id: 12,
-      name: 'Lats',
+      name: 'Hamstrings',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610228/muscles/hamstrings_rsztvf.webp',
     },
     {
       id: 13,
-      name: 'Lower Back',
+      name: 'Lats',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610224/muscles/lats_n8tqqs.webp',
     },
     {
       id: 14,
-      name: 'Neck',
+      name: 'Lower Back',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610974/muscles/lower-back_ndvetw.webp',
     },
     {
       id: 15,
-      name: 'Quadriceps',
+      name: 'Neck',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610223/muscles/neck_cefcma.webp',
     },
     {
       id: 16,
-      name: 'Shoulders',
+      name: 'Quadriceps',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610222/muscles/quadriceps_bm40uf.webp',
     },
     {
       id: 17,
-      name: 'Traps',
+      name: 'Shoulders',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610222/muscles/shoulders_smoyv3.webp',
     },
     {
       id: 18,
-      name: 'Triceps',
+      name: 'Traps',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610221/muscles/traps_fdgciw.webp',
     },
     {
       id: 19,
-      name: 'Upper Back',
+      name: 'Triceps',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610221/muscles/triceps_oo1g14.webp',
     },
     {
       id: 20,
+      name: 'Upper Back',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772610934/muscles/upper-back_uffj3d.webp',
+    },
+    {
+      id: 21,
       name: 'Other',
+      imageUrl:
+        'https://res.cloudinary.com/dzwstma9h/image/upload/v1772616477/muscles/other_lu3fqg.png',
     },
   ],
 };

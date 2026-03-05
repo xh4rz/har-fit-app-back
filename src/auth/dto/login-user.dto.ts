@@ -13,13 +13,16 @@ export class LoginUserDto {
   @IsEmail()
   email: string;
 
-  @ApiProperty({ example: 'Password1', minLength: 6, maxLength: 50 })
+  @ApiProperty({ example: 'Password1', minLength: 6, maxLength: 20 })
   @IsString()
   @MinLength(6)
-  @MaxLength(50)
-  @Matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message:
-      'The password must have a Uppercase, lowercase letter and a number',
-  })
+  @MaxLength(20)
+  @Matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]+$/,
+    {
+      message:
+        'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character',
+    },
+  )
   password: string;
 }

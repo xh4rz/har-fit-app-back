@@ -9,6 +9,9 @@ export class Equipment {
   @Column('text')
   name: string;
 
+  @Column('text')
+  imageUrl: string;
+
   @OneToMany(() => Exercise, (exercise) => exercise.equipment)
   exercises: Exercise[];
 }
