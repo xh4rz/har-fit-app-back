@@ -108,8 +108,8 @@ export const initialData: SeedData = {
         'Hold for a moment and press the bar until your elbows are straight. Exhale.',
       ],
       file: {
-        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1771051550/exercises/00251201-Barbell-Bench-Press_Chest_ydmn6f.mp4',
-        publicId: 'exercises/00251201-Barbell-Bench-Press_Chest_ydmn6f',
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1774605668/exercises/00251201-Barbell-Bench-Press_Chest_iqoapc.mp4',
+        publicId: 'exercises/00251201-Barbell-Bench-Press_Chest_iqoapc',
       },
     },
     {
@@ -130,8 +130,8 @@ export const initialData: SeedData = {
       ],
 
       file: {
-        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1771051589/exercises/07431201-Sled-Hack-Squat_Hips_xq4asz.mp4',
-        publicId: 'exercises/07431201-Sled-Hack-Squat_Hips_xq4asz',
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1774605667/exercises/07431201-Sled-Hack-Squat_Hips_hgsvlg.mp4',
+        publicId: 'exercises/07431201-Sled-Hack-Squat_Hips_hgsvlg',
       },
     },
   ],
