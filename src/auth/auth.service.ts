@@ -1,12 +1,13 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RegisterUserDto, LoginUserDto } from './dto';
+import { RegisterUserDto, LoginUserDto, RefreshTokenDto } from './dto';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './interfaces';
 import { DatabaseExceptionService } from 'src/common/services';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +16,7 @@ export class AuthService {
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
     private readonly databaseExceptionService: DatabaseExceptionService,
+    private readonly configService: ConfigService,
   ) {}
 
   async register(registerUserDto: RegisterUserDto) {
@@ -32,9 +34,10 @@ export class AuthService {
 
       return {
         user: restUser,
-        token: this.getJwtToken({
+        accessToken: this.getJwtAccessToken({
           id: user.id,
         }),
+        refreshToken: await this.createRefreshToken(user),
       };
     } catch (error) {
       this.databaseExceptionService.handleDBExceptions(error);
@@ -66,15 +69,86 @@ export class AuthService {
 
     return {
       user: restUser,
-      token: this.getJwtToken({
+      accessToken: this.getJwtAccessToken({
         id: user.id,
       }),
+      refreshToken: await this.createRefreshToken(user),
     };
   }
 
-  private getJwtToken(payload: JwtPayload) {
+  private getJwtAccessToken(payload: JwtPayload) {
     const token = this.jwtService.sign(payload);
-
     return token;
+  }
+
+  async createRefreshToken(user: User) {
+    const refreshToken = this.jwtService.sign(
+      {
+        id: user.id,
+      },
+      {
+        secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+        expiresIn: '7d',
+      },
+    );
+
+    const hashedRefreshToken = bcrypt.hashSync(refreshToken, 10);
+
+    await this.userRepository.update(user.id, {
+      refreshToken: hashedRefreshToken,
+    });
+
+    return refreshToken;
+  }
+
+  async refreshAccessToken(refreshTokenDto: RefreshTokenDto) {
+    try {
+      const { refreshToken } = refreshTokenDto;
+
+      const payload = this.jwtService.verify(refreshToken, {
+        secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+      });
+
+      const user = await this.userRepository.findOne({
+        where: { id: payload.id },
+        select: {
+          id: true,
+          refreshToken: true,
+        },
+      });
+
+      if (!user) {
+        throw new UnauthorizedException('User not found');
+      }
+
+      if (!user.refreshToken) {
+        throw new UnauthorizedException('Invalid refresh token');
+      }
+
+      const isValid = bcrypt.compareSync(refreshToken, user.refreshToken);
+
+      if (!isValid) {
+        throw new UnauthorizedException('Invalid refresh token');
+      }
+
+      const newRefreshToken = await this.createRefreshToken(user);
+
+      return {
+        accessToken: this.getJwtAccessToken({ id: user.id }),
+        refreshToken: newRefreshToken,
+      };
+    } catch (e) {
+      throw new UnauthorizedException('Invalid or expired refresh token');
+    }
+  }
+
+  async logout(userId: string) {
+    await this.userRepository.update(userId, {
+      refreshToken: null,
+    });
+
+    return {
+      message: 'You have successfully logged out.',
+    };
   }
 }

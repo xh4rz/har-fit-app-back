@@ -23,7 +23,7 @@ import { MusclesModule } from './muscles/muscles.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       autoLoadEntities: true,
-      synchronize: true, // Disable in production
+      synchronize: process.env.STAGE !== 'prod', // Disable in production
     }),
     AuthModule,
     SeedModule,

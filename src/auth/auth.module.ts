@@ -23,9 +23,9 @@ import { CommonModule } from '../common/common.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
         return {
-          secret: configService.get('JWT_SECRET'),
+          secret: configService.get('JWT_ACCESS_TOKEN_SECRET'),
           signOptions: {
-            expiresIn: '2h',
+            expiresIn: '10m',
           },
         };
       },

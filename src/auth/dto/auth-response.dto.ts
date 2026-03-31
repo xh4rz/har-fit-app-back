@@ -25,5 +25,11 @@ export class AuthResponseDto {
     description: 'JWT access token for authentication',
     example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
   })
-  token: string;
+  accessToken: string;
+
+  @ApiProperty({
+    description: 'JWT access token for authentication',
+    example: 'bcFdfdssddfsff505d5d5d1d5cCI6IkpXVJ9...',
+  })
+  refreshToken: string;
 }

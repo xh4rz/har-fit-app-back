@@ -35,10 +35,18 @@ export class User {
   })
   roles: string[];
 
+  @Column('text', { nullable: true })
+  refreshToken: string | null;
+
   @BeforeInsert()
   @BeforeUpdate()
   checkFieldsBeforeInsert() {
-    this.email = this.email.toLowerCase().trim();
-    this.fullName = this.fullName.toLowerCase();
+    if (this.email) {
+      this.email = this.email.toLowerCase().trim();
+    }
+
+    if (this.fullName) {
+      this.fullName = this.fullName.toLowerCase().trim();
+    }
   }
 }
