@@ -1,8 +1,10 @@
+import { Routine } from 'src/routines/entities/routine.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -49,4 +51,7 @@ export class User {
       this.fullName = this.fullName.toLowerCase().trim();
     }
   }
+
+  @OneToMany(() => Routine, (routine) => routine.user)
+  routines: Routine[];
 }

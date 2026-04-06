@@ -3,6 +3,8 @@
 /node_modules
 /build
 
+*.tsbuildinfo
+
 # postgres
 postgres/
 

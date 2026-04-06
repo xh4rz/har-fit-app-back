@@ -18,6 +18,5 @@ import { Muscle } from '../muscles/entities/muscle.entity';
     CloudinaryModule,
     CommonModule,
   ],
-  exports: [ExercisesService, TypeOrmModule],
 })
 export class ExercisesModule {}

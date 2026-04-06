@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  HttpException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -10,6 +11,12 @@ export class DatabaseExceptionService {
   private readonly logger = new Logger('DatabaseExceptionService');
 
   handleDBExceptions(error: any): never {
+    //  sI ya es un error HTTP → lo relanzas
+    if (error instanceof HttpException) {
+      this.logger.error(error);
+      throw error;
+    }
+
     // Error de violación de constraint único (PostgreSQL)
     if (error.code === '23505') {
       const detail: string = error.detail || '';

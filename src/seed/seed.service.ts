@@ -6,6 +6,7 @@ import { initialData } from './data/seed-data';
 import { Exercise, ExerciseVideo } from '../exercises/entities';
 import { Equipment } from '../equipments/entities/equipment.entity';
 import { Muscle } from '../muscles/entities/muscle.entity';
+import { Routine } from '../routines/entities/routine.entity';
 
 @Injectable()
 export class SeedService {
@@ -24,6 +25,9 @@ export class SeedService {
 
     @InjectRepository(Muscle)
     private readonly muscleRepository: Repository<Muscle>,
+
+    @InjectRepository(Routine)
+    private readonly routineRepository: Repository<Routine>,
   ) {}
 
   async runSeed() {
@@ -48,6 +52,8 @@ export class SeedService {
     await this.muscleRepository.createQueryBuilder().delete().execute();
 
     await this.userRepository.createQueryBuilder().delete().execute();
+
+    await this.routineRepository.createQueryBuilder().delete().execute();
   }
 
   private async insertUsers() {

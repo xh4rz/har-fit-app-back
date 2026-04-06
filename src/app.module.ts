@@ -10,6 +10,7 @@ import { CommonModule } from './common/common.module';
 import { DatabaseExceptionService } from './common/services';
 import { EquipmentsModule } from './equipments/equipments.module';
 import { MusclesModule } from './muscles/muscles.module';
+import { RoutinesModule } from './routines/routines.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { MusclesModule } from './muscles/muscles.module';
     CommonModule,
     EquipmentsModule,
     MusclesModule,
+    RoutinesModule,
   ],
   controllers: [],
   providers: [DatabaseExceptionService],

@@ -7,10 +7,12 @@ import {
   ManyToMany,
   JoinTable,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from 'typeorm';
 import { ExerciseVideo } from './exercise-video.entity';
 import { Equipment } from '../../equipments/entities/equipment.entity';
 import { Muscle } from '../../muscles/entities/muscle.entity';
+import { RoutineExercise } from '../../routines/entities/routine-exercise.entity';
 
 @Entity({ name: 'exercises' })
 export class Exercise {
@@ -64,4 +66,10 @@ export class Exercise {
     },
   })
   secondaryMuscles: Muscle[];
+
+  @OneToMany(
+    () => RoutineExercise,
+    (routineExercise) => routineExercise.exercise,
+  )
+  routineExercises: RoutineExercise[];
 }
