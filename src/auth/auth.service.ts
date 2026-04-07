@@ -142,13 +142,22 @@ export class AuthService {
     }
   }
 
-  async logout(userId: string) {
-    await this.userRepository.update(userId, {
-      refreshToken: null,
+  async findUserById(userId: string) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      select: {
+        id: true,
+        email: true,
+        fullName: true,
+        isActive: true,
+        roles: true,
+      },
     });
 
-    return {
-      message: 'You have successfully logged out.',
-    };
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    return user;
   }
 }
