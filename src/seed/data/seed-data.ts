@@ -96,8 +96,8 @@ export const initialData: SeedData = {
     {
       title: 'Bench Press (Barbell)',
       equipmentId: 2,
-      primaryMuscleId: 7,
-      secondaryMuscleIds: [8, 16],
+      primaryMuscleId: 8,
+      secondaryMuscleIds: [17, 19],
       instruction: [
         'Lie on the bench.',
         'Extend your arms and grab the bar evenly, having your hands slightly wider than shoulder-width apart.',
@@ -108,15 +108,15 @@ export const initialData: SeedData = {
         'Hold for a moment and press the bar until your elbows are straight. Exhale.',
       ],
       file: {
-        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1774605668/exercises/00251201-Barbell-Bench-Press_Chest_iqoapc.mp4',
-        publicId: 'exercises/00251201-Barbell-Bench-Press_Chest_iqoapc',
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1776189364/exercises/00251201-Barbell-Bench-Press_Chest_lao6do.mp4',
+        publicId: 'exercises/00251201-Barbell-Bench-Press_Chest_lao6do',
       },
     },
     {
       title: 'Hack Squat (Machine)',
       equipmentId: 5,
-      primaryMuscleId: 15,
-      secondaryMuscleIds: [],
+      primaryMuscleId: 16,
+      secondaryMuscleIds: [11, 12],
       instruction: [
         'Add weight to the machine.',
         'Position yourself inside the machine with your shoulders against the pad.',
@@ -128,10 +128,158 @@ export const initialData: SeedData = {
         'Press through your heels and straighten your legs, exhaling near the top.',
         'Once finished, put the safety on, rack the weight, and relax your body.',
       ],
-
       file: {
-        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1774605667/exercises/07431201-Sled-Hack-Squat_Hips_hgsvlg.mp4',
-        publicId: 'exercises/07431201-Sled-Hack-Squat_Hips_hgsvlg',
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1776189517/exercises/07431201-Sled-Hack-Squat_Hips_uru6sr.mp4',
+        publicId: 'exercises/07431201-Sled-Hack-Squat_Hips_uru6sr',
+      },
+    },
+    {
+      title: 'Preacher Curl (Barbell)',
+      equipmentId: 2,
+      primaryMuscleId: 5,
+      instruction: [
+        'Load the bar and adjust the seat height of the preacher bench. You should be able to place your upper arms on the pad and maintain an upright torso.',
+        'Position yourself over the machine, grab the bar with an even underhand grip (palms facing the ceiling), lift the bar, and sit down.',
+        'Bring your shoulders back, engage your abs, and breathe in.',
+        'Lower the bar until your arms are almost straight.',
+        'Lift the bar until your forearms are almost upright, and breathe out.',
+        'Extend your arms slowly as you breathe in.',
+      ],
+      file: {
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1776189963/exercises/00701201-Barbell-Preacher-Curl_Upper-Arms_axbemc.mp4',
+        publicId: 'exercises/00701201-Barbell-Preacher-Curl_Upper-Arms_axbemc',
+      },
+    },
+    {
+      title: 'Behind the Back Curl (Cable)',
+      equipmentId: 5,
+      primaryMuscleId: 5,
+      instruction: [
+        'Set the pulleys at around mid-thigh height, attach handles, and select the load.',
+        'Grab the handles one by one and stand so the pulleys are behind you.',
+        'Take a couple of steps forward to lift the weights off their stacks and allow the weight to pull your elbows behind your torso.',
+        'With your chest out, lean your torso slightly forward and stagger your stance (one foot forward, the other one back).',
+        'Breathe in, engage your abs, and curl until your wrists are at elbow level. Squeeze your biceps and exhale.',
+        'Slowly extend your arms, allowing the handles to travel behind your body, and breathe in.',
+        'Repeat.',
+      ],
+      file: {
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1776226308/exercises/48381201-Cable-Unilateral-Bicep-Curl_Upper-Arms__oalnat.mp4',
+        publicId:
+          'exercises/48381201-Cable-Unilateral-Bicep-Curl_Upper-Arms__oalnat',
+      },
+    },
+    {
+      title: 'Skullcrusher (Barbell)',
+      equipmentId: 2,
+      primaryMuscleId: 19,
+      instruction: [
+        'Load a straight bar, lift it off the floor, and support it in front of your chest.',
+        'Carefully sit on a flat gym bench and lie back while keeping the bar close to your torso.',
+        'Extend your arms and bring your shoulders back. Plant your feet on the floor.',
+        'Take a breath and lower the barbell to your forehead or behind your head.',
+        'Pause for a moment and extend your arms while keeping your elbows in position. Exhale near the top.',
+      ],
+      file: {
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1776191210/exercises/00601201-Barbell-Lying-Triceps-Extension-Skull-Crusher_Upper-Arms_lb8qck.mp4',
+        publicId:
+          'exercises/00601201-Barbell-Lying-Triceps-Extension-Skull-Crusher_Upper-Arms_lb8qck',
+      },
+    },
+    {
+      title: 'Leg Press (Machine)',
+      equipmentId: 5,
+      primaryMuscleId: 16,
+      secondaryMuscleIds: [11, 12],
+      instruction: [
+        'Add the appropriate weight to the leg press machine and sit down.',
+        'Lift your legs and plant your feet flat on the platform. Have your feet in a comfortable position with your toes pointing slightly out.',
+        'Grab the handles to your sides, bring your shoulders back, and engage your abs.',
+        'Press the platform and straighten your legs while rotating the handles to remove the safety pins.',
+        'Take another breath and lower the platform by bending your knees.',
+        'Hold the bottom position for a moment and press the platform away as you exhale.',
+        'Once finished, straighten your legs, rotate the handles to put the safety pins on, and rest.',
+      ],
+      file: {
+        url: 'https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07391201-Sled-45-Leg-Press_Hips.mp4',
+        publicId: 'exercises/07391201-Sled-45-Leg-Press_Hips',
+      },
+    },
+    {
+      title: 'Incline Bench Press (Dumbbell)',
+      equipmentId: 3,
+      primaryMuscleId: 8,
+      secondaryMuscleIds: [17, 19],
+      instruction: [
+        'Set the incline of a bench at 45 degrees, grab a pair of dumbbells, and sit down.',
+        'Place the dumbbells on top of your thighs, and lie back as you kick the weights up and over your torso.',
+        'Bring the dumbbells to your sides, plant your feet on the floor, retract your shoulders, and take a breath. Keep your elbows somewhat tucked in.',
+        'Press both dumbbells toward the ceiling, tapping them lightly at the top. Breathe out.',
+        'Lower the weights to your sides, breathing in on the way down.',
+      ],
+      file: {
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1776192418/exercises/03141201-Dumbbell-Incline-Bench-Press_Chest_hgv3e5.mp4',
+        publicId:
+          'exercises/03141201-Dumbbell-Incline-Bench-Press_Chest_hgv3e5',
+      },
+    },
+    {
+      title: 'Shoulder Press (Dumbbell)',
+      equipmentId: 3,
+      primaryMuscleId: 17,
+      secondaryMuscleIds: [19],
+      instruction: [
+        'Set an adjustable gym bench at a close to 90-degree angle (almost upright back support).',
+        'Grab a pair of dumbbells and sit down.',
+        'Place the weights on top of your thighs.',
+        'Bring your shoulders back, engage your abs, and take a breath.',
+        'Lift the dumbbells and kick them up with your thighs.',
+        'Position the weights to your sides.',
+        'Take another breath and press the dumbbells up and in, tapping them at the top as you exhale.',
+        'Lower the dumbbells until your elbows are slightly lower than your shoulders, breathing in on the way down.',
+      ],
+      file: {
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1776192675/exercises/04051201-Dumbbell-Seated-Shoulder-Press_Shoulders_ec8qbm.mp4',
+        publicId:
+          'exercises/04051201-Dumbbell-Seated-Shoulder-Press_Shoulders_ec8qbm',
+      },
+    },
+    {
+      title: 'Seated Cable Row - Bar Wide Grip',
+      equipmentId: 5,
+      primaryMuscleId: 20,
+      secondaryMuscleIds: [13, 18, 5, 9],
+      instruction: [
+        'Attach a curved bar to a seated cable row machine.',
+        'Select the appropriate weight.',
+        'Sit down, place your feet on the platform, and bend your knees slightly.',
+        'Lean forward and grab the bar with a double overhand grip (palms facing down).',
+        'Lean back to lift the weight from its stack, engage your abs, and retract your shoulder blades.',
+        'Take a breath and row the bar to your stomach, squeezing your back and breathing out.',
+        'Slowly extend your arms and breathe in.',
+      ],
+      file: {
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1776225750/exercises/02181201-Cable-Seated-Wide-grip-Row_Back_uneciw.mp4',
+        publicId: 'exercises/02181201-Cable-Seated-Wide-grip-Row_Back_uneciw',
+      },
+    },
+    {
+      title: 'Bent Over Row (Barbell)',
+      equipmentId: 2,
+      primaryMuscleId: 20,
+      secondaryMuscleIds: [13, 5, 9],
+      instruction: [
+        'Stand in front of a loaded barbell with your feet in a comfortable stance and toes pointing slightly out.',
+        'Lean forward by hinging at the hip and keep your spine in a neutral position.',
+        'Grab the barbell with an even overhand grip.',
+        'Engage your abs and lift the bar several inches off the floor.',
+        'With your shoulders back and midsection tight, take a breath and row the barbell.',
+        'Lift the bar until it taps your stomach and hold the position for a moment as you exhale.',
+        'Lower the bar slowly.',
+      ],
+      file: {
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1776226005/exercises/00271201-Barbell-Bent-Over-Row_Back_sjsqkn.mp4',
+        publicId: 'exercises/00271201-Barbell-Bent-Over-Row_Back_sjsqkn',
       },
     },
   ],

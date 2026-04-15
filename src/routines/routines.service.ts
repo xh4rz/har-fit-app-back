@@ -46,8 +46,12 @@ export class RoutinesService {
     }
   }
 
-  async findAll() {
-    const routines = await this.routineRepository.find();
+  async findAll(userId: string) {
+    const routines = await this.routineRepository.find({
+      where: {
+        user: { id: userId },
+      },
+    });
 
     return routines.map((routine) => this.transformRoutine(routine));
   }
@@ -122,6 +126,9 @@ export class RoutinesService {
       title: routine.title,
       exercises: Object.values(grouped).map((group) => ({
         exerciseId: group[0].exercise.id,
+        title: group[0].exercise.title,
+        video: group[0].exercise.video.url,
+        primaryMuscleName: group[0].exercise.primaryMuscle.name,
         sets: group.map(({ set, reps, kg }) => ({ set, reps, kg })),
       })),
     };
