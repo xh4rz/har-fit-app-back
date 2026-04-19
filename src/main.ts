@@ -10,7 +10,7 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
 
   app.enableCors({
-    origin: true,
+    origin: 'https://2565-191-107-35-75.ngrok-free.app',
     credentials: true,
   });
 
