@@ -203,7 +203,7 @@ export class AuthService {
     const cookieOptions: CookieOptions = {
       httpOnly: true,
       secure: isProd,
-      sameSite: isProd ? 'strict' : 'lax',
+      sameSite: isProd ? 'none' : 'lax',
       path: '/',
     };
 
