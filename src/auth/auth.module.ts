@@ -25,7 +25,7 @@ import { CommonModule } from '../common/common.module';
         return {
           secret: configService.get('JWT_ACCESS_TOKEN_SECRET'),
           signOptions: {
-            expiresIn: '10m',
+            expiresIn: configService.get('JWT_ACCESS_TOKEN_EXPIRATION_MS'),
           },
         };
       },

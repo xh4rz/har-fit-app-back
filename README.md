@@ -38,7 +38,7 @@ npm run start:dev
 8. Reconstruir la base de datos con la semilla
 
 ```
-http://localhost:3000/api/seed
+http://localhost:3001/api/seed
 ```
 
 # Production Build

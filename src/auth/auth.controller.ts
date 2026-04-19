@@ -1,8 +1,9 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Res, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterUserDto, LoginUserDto } from './dto';
-import { Auth, AuthResponses, GetUser } from './decorators';
-import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { Auth, AuthResponses, ClientType, GetUser } from './decorators';
+import { type Request, type Response } from 'express';
+import type { ClientTypeValue } from './interfaces';
 
 @Controller('auth')
 export class AuthController {
@@ -10,24 +11,44 @@ export class AuthController {
 
   @AuthResponses('Register')
   @Post('register')
-  createUser(@Body() registerUserDto: RegisterUserDto) {
-    return this.authService.register(registerUserDto);
+  createUser(
+    @Body() registerUserDto: RegisterUserDto,
+    @ClientType() clientType: ClientTypeValue,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.authService.register(registerUserDto, clientType, response);
   }
 
   @AuthResponses('Login')
   @Post('login')
-  loginUser(@Body() loginUserDto: LoginUserDto) {
-    return this.authService.login(loginUserDto);
+  loginUser(
+    @Body() loginUserDto: LoginUserDto,
+    @ClientType() clientType: ClientTypeValue,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.authService.login(loginUserDto, clientType, response);
   }
 
   @Post('refresh-token')
-  async refreshToken(@Body() refreshToken: RefreshTokenDto) {
-    return this.authService.refreshAccessToken(refreshToken);
+  refreshToken(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+    @ClientType() clientType: ClientTypeValue,
+  ) {
+    return this.authService.refreshAccessToken(request, response, clientType);
+  }
+
+  @Post('logout')
+  logoutUser(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.authService.logout(request, response);
   }
 
   @Auth()
   @Get('user')
-  logout(@GetUser('id') userId: string) {
+  getUser(@GetUser('id') userId: string) {
     return this.authService.findUserById(userId);
   }
 }
