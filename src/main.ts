@@ -10,7 +10,10 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
 
   app.enableCors({
-    origin: 'https://2565-191-107-35-75.ngrok-free.app',
+    origin: [
+      'http://localhost:3000',
+      'https://har-fit-app-front-web.vercel.app',
+    ],
     credentials: true,
   });
 
