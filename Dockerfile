@@ -15,7 +15,6 @@ RUN npm run build
 
 # Production image, copy all the files and run next
 FROM node:22.17.0-alpine3.22 AS runner
-# ENV NODE_ENV=production
 
 # Set working directory
 WORKDIR /usr/src/app
