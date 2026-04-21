@@ -127,8 +127,11 @@ export class AuthService {
         });
       }
     } finally {
-      response.clearCookie('accessToken');
-      response.clearCookie('refreshToken');
+      const cookieOptions = this.getCookieOptions();
+
+      response.clearCookie('accessToken', cookieOptions);
+      response.clearCookie('refreshToken', cookieOptions);
+
       return { ok: true };
     }
   }
@@ -190,8 +193,6 @@ export class AuthService {
     accessToken: string,
     refreshToken: string,
   ) {
-    const isProd = this.configService.get('NODE_ENV') === 'production';
-
     const accessExpirationMs = parseInt(
       this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_MS')!,
     );
@@ -200,12 +201,7 @@ export class AuthService {
       this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_MS')!,
     );
 
-    const cookieOptions: CookieOptions = {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'none' : 'lax',
-      path: '/',
-    };
+    const cookieOptions = this.getCookieOptions();
 
     response.cookie('accessToken', accessToken, {
       ...cookieOptions,
@@ -263,5 +259,16 @@ export class AuthService {
     this.setAuthCookies(response, tokens.accessToken, tokens.refreshToken);
 
     return {};
+  }
+
+  private getCookieOptions(): CookieOptions {
+    const isProd = this.configService.get('NODE_ENV') === 'production';
+
+    return {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      path: '/',
+    };
   }
 }
