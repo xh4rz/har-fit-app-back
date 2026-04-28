@@ -201,8 +201,8 @@ export const initialData: SeedData = {
         'Once finished, straighten your legs, rotate the handles to put the safety pins on, and rest.',
       ],
       file: {
-        url: 'https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07391201-Sled-45-Leg-Press_Hips.mp4',
-        publicId: 'exercises/07391201-Sled-45-Leg-Press_Hips',
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1776191469/exercises/07391201-Sled-45-Leg-Press_Hips_mho4r7.mp4',
+        publicId: 'exercises/07391201-Sled-45-Leg-Press_Hips_mho4r7',
       },
     },
     {
