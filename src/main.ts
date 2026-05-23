@@ -12,9 +12,9 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3000',
-      'https://har-fit-app-front-web.vercel.app'
+      'https://har-fit-app-front-web.vercel.app',
     ],
-    credentials: true
+    credentials: true,
   });
 
   app.setGlobalPrefix('api');
@@ -26,9 +26,9 @@ async function bootstrap() {
       forbidUnknownValues: true,
       transform: true,
       transformOptions: {
-        enableImplicitConversion: true
-      }
-    })
+        enableImplicitConversion: true,
+      },
+    }),
   );
 
   app.use(cookieParser());

@@ -16,7 +16,7 @@ import { RoutinesModule } from './routines/routines.module';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      ssl: process.env.STAGE === 'prod',
+      ssl: process.env.NODE_ENV === 'production',
       type: 'postgres',
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT!,
@@ -24,7 +24,7 @@ import { RoutinesModule } from './routines/routines.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       autoLoadEntities: true,
-      synchronize: process.env.STAGE !== 'prod', // Disable in production
+      synchronize: process.env.NODE_ENV !== 'production',
     }),
     AuthModule,
     SeedModule,
