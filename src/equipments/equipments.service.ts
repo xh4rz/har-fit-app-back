@@ -13,7 +13,7 @@ export class EquipmentsService {
   async findAll() {
     try {
       return await this.equipmentRepository.find();
-    } catch (error) {
+    } catch {
       throw new InternalServerErrorException('Error fetching equipments');
     }
   }

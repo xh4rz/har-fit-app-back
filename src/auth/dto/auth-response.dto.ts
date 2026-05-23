@@ -13,7 +13,7 @@ class UserData {
   @ApiProperty({ default: true })
   isActive: boolean;
 
-  @ApiProperty({ example: ['user'], type: [String] })
+  @ApiProperty({ example: ['user'], type: [String], isArray: true })
   roles: string[];
 }
 

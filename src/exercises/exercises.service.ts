@@ -8,7 +8,6 @@ import { CloudinaryResponse } from '../cloudinary/interfaces/cloudinary-response
 import { Exercise, ExerciseVideo } from './entities';
 import { DatabaseExceptionService } from '../common/services';
 import { PaginationDto } from '../common/dtos';
-import { Equipment } from '../equipments/entities/equipment.entity';
 import { Muscle } from '../muscles/entities/muscle.entity';
 
 @Injectable()

@@ -108,7 +108,7 @@ export class AuthService {
       const tokens = await this.validateAndGenerateTokens(refreshToken);
 
       return this.handleAuthResponse(clientType, response, tokens);
-    } catch (e) {
+    } catch {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
   }
@@ -126,13 +126,14 @@ export class AuthService {
           refreshToken: null,
         });
       }
-    } finally {
-      const cookieOptions = this.getCookieOptions();
-
-      response.clearCookie('accessToken', cookieOptions);
-      response.clearCookie('refreshToken', cookieOptions);
 
       return { ok: true };
+    } catch {
+      return { ok: true };
+    } finally {
+      const cookieOptions = this.getCookieOptions();
+      response.clearCookie('accessToken', cookieOptions);
+      response.clearCookie('refreshToken', cookieOptions);
     }
   }
 
@@ -227,7 +228,7 @@ export class AuthService {
       },
     });
 
-    if (!user || !user.refreshToken) {
+    if (!user?.refreshToken) {
       throw new UnauthorizedException('Invalid refresh token');
     }
 

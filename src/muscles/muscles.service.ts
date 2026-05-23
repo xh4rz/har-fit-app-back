@@ -13,7 +13,7 @@ export class MusclesService {
   async findAll() {
     try {
       return await this.muscleRepository.find();
-    } catch (error) {
+    } catch {
       throw new InternalServerErrorException('Error fetching muscles');
     }
   }

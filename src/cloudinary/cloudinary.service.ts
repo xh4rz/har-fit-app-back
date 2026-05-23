@@ -28,14 +28,10 @@ export class CloudinaryService {
   }
 
   async deleteFile(publicId: string, resourceType: ResourceType) {
-    try {
-      const result = await cloudinary.uploader.destroy(publicId, {
-        resource_type: resourceType,
-      });
-      return result;
-    } catch (error) {
-      throw error;
-    }
+    const result = await cloudinary.uploader.destroy(publicId, {
+      resource_type: resourceType,
+    });
+    return result;
   }
 
   async getFileUrl(
