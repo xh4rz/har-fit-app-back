@@ -129,8 +129,8 @@ export const initialData: SeedData = {
         'Once finished, put the safety on, rack the weight, and relax your body.',
       ],
       file: {
-        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1776189517/exercises/07431201-Sled-Hack-Squat_Hips_uru6sr.mp4',
-        publicId: 'exercises/07431201-Sled-Hack-Squat_Hips_uru6sr',
+        url: 'https://res.cloudinary.com/dzwstma9h/video/upload/v1780046596/exercises/07431201-Sled-Hack-Squat_Hips_zouf2h.mp4',
+        publicId: 'exercises/07431201-Sled-Hack-Squat_Hips_zouf2h',
       },
     },
     {
