@@ -1,6 +1,6 @@
 import { IsOptional, IsPositive, Min } from 'class-validator';
 
-export class PaginationDto {
+export class FindAllExercisesDto {
   @IsOptional()
   @IsPositive()
   limit?: number;
@@ -8,4 +8,12 @@ export class PaginationDto {
   @IsOptional()
   @Min(0)
   offset?: number;
+
+  @IsOptional()
+  @IsPositive()
+  primaryMuscleId?: number;
+
+  @IsOptional()
+  @IsPositive()
+  equipmentId?: number;
 }

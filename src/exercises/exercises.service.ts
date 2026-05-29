@@ -1,13 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
-import { CreateExerciseDto } from './dto/create-exercise.dto';
-import { UpdateExerciseDto } from './dto/update-exercise.dto';
+import { FindOptionsWhere, In, Repository } from 'typeorm';
+import {
+  CreateExerciseDto,
+  FindAllExercisesDto,
+  UpdateExerciseDto,
+} from './dto';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { CloudinaryResponse } from '../cloudinary/interfaces/cloudinary-response';
 import { Exercise, ExerciseVideo } from './entities';
 import { DatabaseExceptionService } from '../common/services';
-import { PaginationDto } from '../common/dtos';
+
 import { Muscle } from '../muscles/entities/muscle.entity';
 
 @Injectable()
@@ -66,10 +69,30 @@ export class ExercisesService {
     }
   }
 
-  async findAll(paginationDto: PaginationDto) {
-    const { limit = 10, offset = 0 } = paginationDto;
+  async findAll(findAllExercisesDto: FindAllExercisesDto) {
+    const {
+      limit = 10,
+      offset = 0,
+      primaryMuscleId = 0,
+      equipmentId = 0,
+    } = findAllExercisesDto;
+
+    const where: FindOptionsWhere<Exercise> = {};
+
+    if (primaryMuscleId && primaryMuscleId !== 1) {
+      where.primaryMuscle = {
+        id: primaryMuscleId,
+      };
+    }
+
+    if (equipmentId && equipmentId !== 1) {
+      where.equipment = {
+        id: equipmentId,
+      };
+    }
 
     const exercises = await this.exerciseRepository.find({
+      where,
       take: limit,
       skip: offset,
     });

@@ -13,9 +13,11 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { ExercisesService } from './exercises.service';
-import { CreateExerciseDto } from './dto/create-exercise.dto';
-import { UpdateExerciseDto } from './dto/update-exercise.dto';
-import { PaginationDto } from '../common/dtos';
+import {
+  CreateExerciseDto,
+  FindAllExercisesDto,
+  UpdateExerciseDto,
+} from './dto';
 import { Auth } from '../auth/decorators';
 import { VideoFileUpload } from '../common/decorators';
 import { ValidRoles } from '../auth/interfaces';
@@ -38,8 +40,8 @@ export class ExercisesController {
   }
 
   @Get()
-  findAll(@Query() paginationDto: PaginationDto) {
-    return this.exercisesService.findAll(paginationDto);
+  findAll(@Query() findAllExercisesDto: FindAllExercisesDto) {
+    return this.exercisesService.findAll(findAllExercisesDto);
   }
 
   @Get(':id')
