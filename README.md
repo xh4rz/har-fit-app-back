@@ -430,28 +430,6 @@ files/
 
 ---
 
-# 📦 Variables de Entorno
-
-Ejemplo:
-
-```env
-PORT=3001
-
-DB_HOST=
-DB_PORT=
-DB_USERNAME=
-DB_PASSWORD=
-DB_NAME=
-
-JWT_SECRET=
-
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
-```
-
----
-
 # ⚙️ Instalación
 
 ## 1. Clonar repositorio
@@ -465,7 +443,7 @@ git clone
 ## 2. Instalar dependencias
 
 ```bash
-npm install
+pnpm install
 ```
 
 ---
@@ -473,7 +451,7 @@ npm install
 ## 3. Instalar Nest CLI
 
 ```bash
-npm install -g @nestjs/cli
+pnpm install -g @nestjs/cli
 ```
 
 ---
@@ -489,23 +467,15 @@ Duplicar:
 Renombrar a:
 
 ```txt
-.env
+.env.development
 ```
 
 ---
 
-## 5. Levantar PostgreSQL
+## 5. Ejecutar aplicación
 
 ```bash
-docker-compose up -d
-```
-
----
-
-## 6. Ejecutar aplicación
-
-```bash
-npm run start:dev
+pnpm start:dev
 ```
 
 Servidor:
@@ -531,47 +501,37 @@ http://localhost:3001/api/seed
 ## Desarrollo
 
 ```bash
-npm run start:dev
+pnpm start:dev
 ```
-
----
 
 ## Build
 
 ```bash
-npm run build
+pnpm build
 ```
-
----
 
 ## Producción
 
 ```bash
-npm run start:prod
+pnpm start:prod
 ```
-
----
 
 ## Lint
 
 ```bash
-npm run lint
+pnpm lint
 ```
-
----
 
 ## Tests
 
 ```bash
-npm run test
+pnpm test
 ```
-
----
 
 ## Coverage
 
 ```bash
-npm run test:cov
+pnpm test:cov
 ```
 
 ---
@@ -580,16 +540,43 @@ npm run test:cov
 
 ## Desarrollo
 
+Levantar contenedores:
+
 ```bash
-docker-compose up -d
+pnpm docker:up
+```
+
+Detener contenedores:
+
+```bash
+pnpm docker:down
 ```
 
 ---
 
 ## Producción
 
+Levantar contenedores:
+
 ```bash
-docker-compose -f docker-compose.prod.yaml --env-file .env.prod up --build
+pnpm docker:prod
+```
+
+Detener contenedores:
+
+```bash
+pnpm docker:prod:down
+```
+
+---
+
+# 📦 Variables de Entorno
+
+```txt
+.env.template     # Template
+.env.development  # Desarrollo local
+.env.docker       # Docker
+.env.production   # Producción (Render / Neon)
 ```
 
 ---
