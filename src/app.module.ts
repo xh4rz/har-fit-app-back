@@ -11,7 +11,7 @@ import { DatabaseExceptionService } from './common/services';
 import { EquipmentsModule } from './equipments/equipments.module';
 import { MusclesModule } from './muscles/muscles.module';
 import { RoutinesModule } from './routines/routines.module';
-import configuration from '../config/configuration';
+import configuration from './config/configuration';
 
 @Module({
   imports: [

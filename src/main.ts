@@ -2,12 +2,15 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ConfigService } from '@nestjs/config';
 import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const logger = new Logger('Bootstrap');
+
+  const configService = app.get(ConfigService);
 
   app.enableCors({
     origin: [
@@ -43,8 +46,8 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
 
-  await app.listen(process.env.PORT!);
+  await app.listen(configService.get<number>('port')!);
 
-  logger.log(`App running on port ${process.env.PORT!}`);
+  logger.log(`App running on port ${configService.get<number>('port')!}`);
 }
 bootstrap();

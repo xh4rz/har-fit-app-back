@@ -119,7 +119,7 @@ export class AuthService {
 
       if (refreshToken) {
         const payload = this.jwtService.verify(refreshToken, {
-          secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+          secret: this.configService.get<string>('jwt.refreshTokenSecret'),
         });
 
         await this.userRepository.update(payload.id, {
@@ -157,20 +157,24 @@ export class AuthService {
   }
 
   private generateAccessToken(payload: JwtPayload) {
+    const expiresIn = this.configService.get<number>(
+      'jwt.accessTokenExpirationMs',
+    )!;
+
     return this.jwtService.sign(payload, {
-      secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
-      expiresIn: `${this.configService.get(
-        'JWT_ACCESS_TOKEN_EXPIRATION_MS',
-      )}ms`,
+      secret: this.configService.get<string>('jwt.accessTokenSecret'),
+      expiresIn: `${expiresIn}ms`,
     });
   }
 
   private generateRefreshToken(payload: JwtPayload) {
+    const expiresIn = this.configService.get<number>(
+      'jwt.refreshTokenExpirationMs',
+    )!;
+
     return this.jwtService.sign(payload, {
-      secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
-      expiresIn: `${this.configService.get(
-        'JWT_REFRESH_TOKEN_EXPIRATION_MS',
-      )}ms`,
+      secret: this.configService.get<string>('jwt.refreshTokenSecret'),
+      expiresIn: `${expiresIn}ms`,
     });
   }
 
@@ -194,13 +198,13 @@ export class AuthService {
     accessToken: string,
     refreshToken: string,
   ) {
-    const accessExpirationMs = parseInt(
-      this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_MS')!,
-    );
+    const accessExpirationMs = this.configService.get<number>(
+      'jwt.accessTokenExpirationMs',
+    )!;
 
-    const refreshExpirationMs = parseInt(
-      this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_MS')!,
-    );
+    const refreshExpirationMs = this.configService.get<number>(
+      'jwt.refreshTokenExpirationMs',
+    )!;
 
     const cookieOptions = this.getCookieOptions();
 
@@ -217,7 +221,7 @@ export class AuthService {
 
   private async validateAndGenerateTokens(refreshToken: string) {
     const payload = this.jwtService.verify(refreshToken, {
-      secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+      secret: this.configService.get<string>('jwt.refreshTokenSecret'),
     });
 
     const user = await this.userRepository.findOne({
@@ -263,7 +267,7 @@ export class AuthService {
   }
 
   private getCookieOptions(): CookieOptions {
-    const isProd = this.configService.get('NODE_ENV') === 'production';
+    const isProd = this.configService.get<string>('nodeEnv') === 'production';
 
     return {
       httpOnly: true,

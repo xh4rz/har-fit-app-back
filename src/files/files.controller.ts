@@ -36,7 +36,7 @@ export class FilesController {
     }),
   )
   create(@UploadedFile(new ParseFilePipe()) file: Express.Multer.File) {
-    return `${this.configService.get('HOST_API')}/files/exercise/${file.filename}`;
+    return `${this.configService.get<string>('hostApi')}/files/exercise/${file.filename}`;
   }
 
   @Get('exercise/:videoName')
