@@ -51,6 +51,9 @@ export class RoutinesService {
       where: {
         user: { id: userId },
       },
+      order: {
+        createdAt: 'DESC',
+      },
     });
 
     return routines.map((routine) => this.transformRoutine(routine));

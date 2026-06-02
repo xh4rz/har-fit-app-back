@@ -95,6 +95,9 @@ export class ExercisesService {
       where,
       take: limit,
       skip: offset,
+      order: {
+        title: 'ASC',
+      },
     });
 
     return exercises.map((exercise) => ({

@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -16,6 +17,9 @@ export class Routine {
 
   @Column('text')
   title: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   @OneToMany(
     () => RoutineExercise,
