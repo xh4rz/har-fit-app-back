@@ -13,7 +13,7 @@ import { CreateRoutineDto } from './dto/create-routine.dto';
 import { UpdateRoutineDto } from './dto/update-routine.dto';
 import { RoutinesService } from './routines.service';
 import { Auth, GetUser } from '../auth/decorators';
-import { User } from '../auth/entities/user.entity';
+import { User } from '@/users/entities/user.entity';
 
 @ApiBearerAuth()
 @Auth()

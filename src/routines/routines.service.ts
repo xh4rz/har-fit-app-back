@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateRoutineDto } from './dto/create-routine.dto';
 import { UpdateRoutineDto } from './dto/update-routine.dto';
 import { Routine } from './entities/routine.entity';
-import { User } from '../auth/entities/user.entity';
+import { User } from '@/users/entities/user.entity';
 import { RoutineExerciseItem } from './interfaces';
 import { RoutineExercise } from './entities/routine-exercise.entity';
 import { DatabaseExceptionService } from '../common/services/database-exception.service';

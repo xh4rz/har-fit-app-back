@@ -31,6 +31,5 @@ import { UsersModule } from '@/users/users.module';
     CommonModule,
     UsersModule,
   ],
-  exports: [JwtStrategy, PassportModule, JwtModule],
 })
 export class AuthModule {}
