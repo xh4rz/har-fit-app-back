@@ -1,7 +1,7 @@
-import { Controller, Post, Body, Get, Res, Req } from '@nestjs/common';
+import { Controller, Post, Body, Res, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterUserDto, LoginUserDto } from './dto';
-import { Auth, AuthResponses, ClientType, GetUser } from './decorators';
+import { AuthResponses, ClientType } from './decorators';
 import { type Request, type Response } from 'express';
 import type { ClientTypeValue } from './interfaces';
 
@@ -44,11 +44,5 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     return this.authService.logout(request, response);
-  }
-
-  @Auth()
-  @Get('user')
-  getUser(@GetUser('id') userId: string) {
-    return this.authService.findUserById(userId);
   }
 }

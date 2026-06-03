@@ -1,20 +1,17 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { RegisterUserDto, LoginUserDto } from './dto';
-import { User } from '@/auth/entities/user.entity';
-import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { DatabaseExceptionService } from '@/common/services';
 import { ClientTypeValue, JwtPayload } from './interfaces';
 import type { CookieOptions, Request, Response } from 'express';
+import { UsersService } from '@/users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly databaseExceptionService: DatabaseExceptionService,
     private readonly configService: ConfigService,
@@ -28,12 +25,10 @@ export class AuthService {
     try {
       const { password, ...userData } = registerUserDto;
 
-      const user = this.userRepository.create({
+      const user = await this.usersService.create({
         ...userData,
         password: bcrypt.hashSync(password, 10),
       });
-
-      await this.userRepository.save(user);
 
       const { password: _, ...restUser } = user;
 
@@ -57,17 +52,7 @@ export class AuthService {
   ) {
     const { password, email } = loginUserDto;
 
-    const user = await this.userRepository.findOne({
-      where: { email },
-      select: {
-        id: true,
-        email: true,
-        password: true,
-        fullName: true,
-        isActive: true,
-        roles: true,
-      },
-    });
+    const user = await this.usersService.findByEmail(email);
 
     if (!user)
       throw new UnauthorizedException('Credentials are not valid (email)');
@@ -122,9 +107,7 @@ export class AuthService {
           secret: this.configService.get<string>('jwt.refreshTokenSecret'),
         });
 
-        await this.userRepository.update(payload.id, {
-          refreshToken: null,
-        });
+        await this.usersService.updateRefreshToken(payload.id, null);
       }
 
       return { ok: true };
@@ -135,25 +118,6 @@ export class AuthService {
       response.clearCookie('accessToken', cookieOptions);
       response.clearCookie('refreshToken', cookieOptions);
     }
-  }
-
-  async findUserById(userId: string) {
-    const user = await this.userRepository.findOne({
-      where: { id: userId },
-      select: {
-        id: true,
-        email: true,
-        fullName: true,
-        isActive: true,
-        roles: true,
-      },
-    });
-
-    if (!user) {
-      throw new UnauthorizedException('User not found');
-    }
-
-    return user;
   }
 
   private generateAccessToken(payload: JwtPayload) {
@@ -188,9 +152,7 @@ export class AuthService {
   private async saveHashedRefreshToken(userId: string, refreshToken: string) {
     const hashed = bcrypt.hashSync(refreshToken, 10);
 
-    await this.userRepository.update(userId, {
-      refreshToken: hashed,
-    });
+    await this.usersService.updateRefreshToken(userId, hashed);
   }
 
   private setAuthCookies(
@@ -224,13 +186,7 @@ export class AuthService {
       secret: this.configService.get<string>('jwt.refreshTokenSecret'),
     });
 
-    const user = await this.userRepository.findOne({
-      where: { id: payload.id },
-      select: {
-        id: true,
-        refreshToken: true,
-      },
-    });
+    const user = await this.usersService.findByIdWithRefreshToken(payload.id);
 
     if (!user?.refreshToken) {
       throw new UnauthorizedException('Invalid refresh token');

@@ -11,6 +11,7 @@ import { DatabaseExceptionService } from './common/services';
 import { EquipmentsModule } from './equipments/equipments.module';
 import { MusclesModule } from './muscles/muscles.module';
 import { RoutinesModule } from './routines/routines.module';
+import { UsersModule } from './users/users.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -43,6 +44,7 @@ import configuration from './config/configuration';
     EquipmentsModule,
     MusclesModule,
     RoutinesModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [DatabaseExceptionService],
