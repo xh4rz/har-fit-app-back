@@ -1,7 +1,7 @@
 import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
-import { Muscle } from '../../muscles/entities/muscle.entity';
+import { Muscle } from '@/muscles/entities/muscle.entity';
 import { CreateExerciseDto } from '../dto/create-exercise.dto';
 
 @Injectable()

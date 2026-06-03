@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { RoutineExercise } from './routine-exercise.entity';
-import { User } from '../../auth/entities/user.entity';
+import { User } from '@/auth/entities/user.entity';
 
 @Entity({ name: 'routines' })
 export class Routine {

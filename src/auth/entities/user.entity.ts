@@ -1,4 +1,4 @@
-import { Routine } from '../../routines/entities/routine.entity';
+import { Routine } from '@/routines/entities/routine.entity';
 import {
   BeforeInsert,
   BeforeUpdate,

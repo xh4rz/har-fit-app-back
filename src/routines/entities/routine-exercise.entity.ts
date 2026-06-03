@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Routine } from './routine.entity';
-import { Exercise } from '../../exercises/entities/exercise.entity';
+import { Exercise } from '@/exercises/entities';
 
 @Entity({
   name: 'routines_exercises',

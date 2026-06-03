@@ -10,9 +10,9 @@ import {
   OneToMany,
 } from 'typeorm';
 import { ExerciseVideo } from './exercise-video.entity';
-import { Equipment } from '../../equipments/entities/equipment.entity';
-import { Muscle } from '../../muscles/entities/muscle.entity';
-import { RoutineExercise } from '../../routines/entities/routine-exercise.entity';
+import { Equipment } from '@/equipments/entities/equipment.entity';
+import { Muscle } from '@/muscles/entities/muscle.entity';
+import { RoutineExercise } from '@/routines/entities/routine-exercise.entity';
 
 @Entity({ name: 'exercises' })
 export class Exercise {

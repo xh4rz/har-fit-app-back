@@ -5,7 +5,7 @@ import { RoutinesController } from './routines.controller';
 import { Routine } from './entities/routine.entity';
 import { RoutineExercise } from './entities/routine-exercise.entity';
 import { AuthModule } from '../auth/auth.module';
-import { CommonModule } from 'src/common/common.module';
+import { CommonModule } from '@/common/common.module';
 
 @Module({
   controllers: [RoutinesController],

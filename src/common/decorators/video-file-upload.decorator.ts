@@ -1,6 +1,6 @@
 import { UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { fileVideoFilter } from 'src/common/helpers';
+import { fileVideoFilter } from '../helpers';
 
 export const VideoFileUpload = () => {
   return UseInterceptors(

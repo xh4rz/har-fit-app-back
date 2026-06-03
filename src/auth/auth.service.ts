@@ -3,11 +3,11 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { RegisterUserDto, LoginUserDto } from './dto';
-import { User } from './entities/user.entity';
+import { User } from '@/auth/entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { DatabaseExceptionService } from '@/common/services';
 import { ClientTypeValue, JwtPayload } from './interfaces';
-import { DatabaseExceptionService } from 'src/common/services';
 import type { CookieOptions, Request, Response } from 'express';
 
 @Injectable()
