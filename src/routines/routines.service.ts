@@ -1,12 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateRoutineDto } from './dto/create-routine.dto';
-import { UpdateRoutineDto } from './dto/update-routine.dto';
-import { Routine } from './entities/routine.entity';
+import { CreateRoutineDto, UpdateRoutineDto } from './dto';
+import { Routine, RoutineExercise } from './entities';
 import { User } from '@/users/entities/user.entity';
-import { RoutineExerciseItem } from './interfaces';
-import { RoutineExercise } from './entities/routine-exercise.entity';
 import { DatabaseExceptionService } from '../common/services/database-exception.service';
 
 @Injectable()
@@ -27,14 +24,15 @@ export class RoutinesService {
     try {
       const routine = this.routineRepository.create({
         title,
-        routineExercises: exercises.flatMap((exercise) =>
-          exercise.sets.map((set, index) => ({
-            set: index + 1,
+        routineExercises: exercises.map((exercise) => ({
+          exercise: { id: exercise.exerciseId },
+          restTimer: exercise.restTimer,
+          sets: exercise.sets.map((set) => ({
+            set: set.set,
             reps: set.reps,
             kg: set.kg,
-            exercise: { id: exercise.exerciseId },
           })),
-        ),
+        })),
         user,
       });
 
@@ -74,16 +72,16 @@ export class RoutinesService {
           routine: { id },
         });
 
-        routine.routineExercises = exercises.flatMap((exercise) =>
-          exercise.sets.map((set, index) =>
-            this.routineExerciseRepository.create({
-              set: index + 1,
+        routine.routineExercises = exercises.map((exercise) =>
+          this.routineExerciseRepository.create({
+            exercise: { id: exercise.exerciseId },
+            restTimer: exercise.restTimer ?? 0,
+            sets: exercise.sets.map((set) => ({
+              set: set.set,
               reps: set.reps,
               kg: set.kg,
-              exercise: { id: exercise.exerciseId },
-              routine,
-            }),
-          ),
+            })),
+          }),
         );
       }
 
@@ -119,20 +117,20 @@ export class RoutinesService {
   }
 
   private transformRoutine(routine: Routine) {
-    const grouped = Object.groupBy(
-      routine.routineExercises,
-      (item) => item.exercise.id,
-    ) as Record<string, RoutineExerciseItem[]>;
-
     return {
       id: routine.id,
       title: routine.title,
-      exercises: Object.values(grouped).map((group) => ({
-        exerciseId: group[0].exercise.id,
-        title: group[0].exercise.title,
-        video: group[0].exercise.video.url,
-        primaryMuscleName: group[0].exercise.primaryMuscle.name,
-        sets: group.map(({ set, reps, kg }) => ({ set, reps, kg })),
+      exercises: routine.routineExercises.map((routineExercise) => ({
+        exerciseId: routineExercise.exercise.id,
+        title: routineExercise.exercise.title,
+        video: routineExercise.exercise.video.url,
+        primaryMuscleName: routineExercise.exercise.primaryMuscle.name,
+        restTimer: routineExercise.restTimer,
+        sets: routineExercise.sets.map(({ set, reps, kg }) => ({
+          set,
+          reps,
+          kg,
+        })),
       })),
     };
   }
