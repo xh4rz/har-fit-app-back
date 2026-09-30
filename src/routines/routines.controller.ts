@@ -13,7 +13,6 @@ import { CreateRoutineDto } from './dto/create-routine.dto';
 import { UpdateRoutineDto } from './dto/update-routine.dto';
 import { RoutinesService } from './routines.service';
 import { Auth, GetUser } from '../auth/decorators';
-import { User } from '@/users/entities/user.entity';
 
 @ApiBearerAuth()
 @Auth()
@@ -22,8 +21,11 @@ export class RoutinesController {
   constructor(private readonly routinesService: RoutinesService) {}
 
   @Post()
-  create(@Body() createRoutineDto: CreateRoutineDto, @GetUser() user: User) {
-    return this.routinesService.create(createRoutineDto, user);
+  create(
+    @GetUser('id') userId: string,
+    @Body() createRoutineDto: CreateRoutineDto,
+  ) {
+    return this.routinesService.create(userId, createRoutineDto);
   }
 
   @Get()
@@ -45,7 +47,7 @@ export class RoutinesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.routinesService.remove(id);
   }
 }
