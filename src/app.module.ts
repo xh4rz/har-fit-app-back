@@ -12,6 +12,7 @@ import { EquipmentsModule } from './equipments/equipments.module';
 import { MusclesModule } from './muscles/muscles.module';
 import { RoutinesModule } from './routines/routines.module';
 import { UsersModule } from './users/users.module';
+import { WorkoutsModule } from './workouts/workouts.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -45,6 +46,7 @@ import configuration from './config/configuration';
     MusclesModule,
     RoutinesModule,
     UsersModule,
+    WorkoutsModule,
   ],
   controllers: [],
   providers: [DatabaseExceptionService],
