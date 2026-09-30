@@ -1,4 +1,3 @@
-import { Routine } from '@/routines/entities/routine.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -8,7 +7,9 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Routine } from '@/routines/entities/routine.entity';
 import { UserImage } from './user-image.entity';
+import { Workout } from '@/workouts/entities/workout.entity';
 import { Gender } from '@/auth/interfaces';
 
 @Entity('users')
@@ -84,4 +85,7 @@ export class User {
     eager: true,
   })
   image: UserImage;
+
+  @OneToMany(() => Workout, (workout) => workout.user)
+  workouts: Workout[];
 }
