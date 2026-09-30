@@ -27,9 +27,8 @@ export class RoutineExercise {
   @JoinColumn({ name: 'routineId' })
   routine: Routine;
 
-  @ManyToOne(() => Exercise, (exercise) => exercise.routineExercises, {
+  @ManyToOne(() => Exercise, {
     eager: true,
-    onDelete: 'CASCADE',
     nullable: false,
   })
   @JoinColumn({ name: 'exerciseId' })

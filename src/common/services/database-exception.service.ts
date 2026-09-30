@@ -19,6 +19,9 @@ export class DatabaseExceptionService {
       throw error;
     }
 
+    // Log del error para debugging
+    this.logger.error(error);
+
     // Error de violación de constraint único (PostgreSQL)
     if (error.code === '23505') {
       const detail: string = error.detail || '';
@@ -54,9 +57,6 @@ export class DatabaseExceptionService {
         error.detail || 'Not null constraint violation',
       );
     }
-
-    // Log del error para debugging
-    this.logger.error(error);
 
     // Error genérico
     throw new InternalServerErrorException(

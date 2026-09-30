@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRoutineDto, UpdateRoutineDto } from './dto';
 import { Routine, RoutineExercise } from './entities';
-import { User } from '@/users/entities/user.entity';
 import { DatabaseExceptionService } from '../common/services/database-exception.service';
 
 @Injectable()
@@ -18,7 +17,7 @@ export class RoutinesService {
     private readonly databaseExceptionService: DatabaseExceptionService,
   ) {}
 
-  async create(createRoutineDto: CreateRoutineDto, user: User) {
+  async create(userId: string, createRoutineDto: CreateRoutineDto) {
     const { exercises, title } = createRoutineDto;
 
     try {
@@ -33,7 +32,7 @@ export class RoutinesService {
             kg: set.kg,
           })),
         })),
-        user,
+        user: { id: userId },
       });
 
       await this.routineRepository.save(routine);

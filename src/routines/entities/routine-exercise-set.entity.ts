@@ -14,10 +14,10 @@ export class RoutineExerciseSet {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column('int')
   set: number;
 
-  @Column()
+  @Column('int')
   reps: number;
 
   @Column('float')
