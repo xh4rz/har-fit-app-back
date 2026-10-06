@@ -2,14 +2,17 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DatabaseExceptionService } from '@/common/services';
-import { Workout } from './entities';
-import { CreateWorkoutDto } from './dto/create-workout.dto';
+import { Workout, WorkoutExercise } from './entities';
+import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 
 @Injectable()
 export class WorkoutsService {
   constructor(
     @InjectRepository(Workout)
     private readonly workoutRepository: Repository<Workout>,
+
+    @InjectRepository(WorkoutExercise)
+    private readonly workoutExerciseRepository: Repository<WorkoutExercise>,
 
     private readonly databaseExceptionService: DatabaseExceptionService,
   ) {}
@@ -18,39 +21,14 @@ export class WorkoutsService {
     const { title, duration, description, exercises } = createWorkoutDto;
 
     try {
-      const workoutExercises = exercises
-        .map(({ exerciseId, sets, ...exercise }) => {
-          const completedSets = sets.filter(({ completed }) => completed);
-
-          return {
-            ...exercise,
-            exercise: { id: exerciseId },
-            sets: completedSets,
-          };
-        })
-        .filter(({ sets }) => sets.length > 0);
-
-      const sets = workoutExercises.reduce(
-        (total, exercise) => total + exercise.sets.length,
-        0,
-      );
-
-      const volume = workoutExercises.reduce(
-        (total, exercise) =>
-          total +
-          exercise.sets.reduce(
-            (exerciseVolume, set) => exerciseVolume + set.kg * set.reps,
-            0,
-          ),
-        0,
-      );
+      const { workoutExercises, sets, volume } = this.getWorkoutData(exercises);
 
       const workout = this.workoutRepository.create({
         title,
         duration,
         description,
-        volume,
         sets,
+        volume,
         workoutExercises,
         user: { id: userId },
       });
@@ -61,18 +39,6 @@ export class WorkoutsService {
     } catch (error) {
       this.databaseExceptionService.handleDBExceptions(error);
     }
-  }
-
-  async findOne(id: string) {
-    const workout = await this.workoutRepository.findOne({
-      where: { id },
-    });
-
-    if (!workout) {
-      this.workoutNotFound(id);
-    }
-
-    return this.transformWorkout(workout);
   }
 
   async findAll(userId: string) {
@@ -88,16 +54,98 @@ export class WorkoutsService {
     return workouts.map((workout) => this.transformWorkout(workout));
   }
 
-  // update(id: number, updateWorkoutDto: UpdateWorkoutDto) {
-  //   return `This action updates a #${id} workout`;
-  // }
+  async findOne(id: string) {
+    const workout = await this.getWorkout(id);
+
+    return this.transformWorkout(workout);
+  }
+
+  async update(id: string, updateWorkoutDto: UpdateWorkoutDto) {
+    const { exercises, ...data } = updateWorkoutDto;
+
+    try {
+      const workout = await this.getWorkout(id);
+
+      Object.assign(workout, data);
+
+      if (exercises) {
+        await this.workoutExerciseRepository.delete({
+          workout: { id },
+        });
+
+        const workoutData = this.getWorkoutData(exercises);
+
+        workout.sets = workoutData.sets;
+        workout.volume = workoutData.volume;
+
+        workout.workoutExercises = workoutData.workoutExercises.map(
+          (workoutExercise) =>
+            this.workoutExerciseRepository.create({
+              ...workoutExercise,
+              workout,
+            }),
+        );
+      }
+
+      await this.workoutRepository.save(workout);
+
+      return this.findOne(id);
+    } catch (error) {
+      this.databaseExceptionService.handleDBExceptions(error);
+    }
+  }
 
   async remove(id: string) {
-    const result = await this.workoutRepository.delete(id);
+    const workout = await this.getWorkout(id);
 
-    if (result.affected === 0) {
+    await this.workoutRepository.remove(workout);
+  }
+
+  private async getWorkout(id: string) {
+    const workout = await this.workoutRepository.findOne({
+      where: { id },
+    });
+
+    if (!workout) {
       this.workoutNotFound(id);
     }
+
+    return workout;
+  }
+
+  private getWorkoutData(exercises: CreateWorkoutDto['exercises']) {
+    const workoutExercises = exercises
+      .map(({ exerciseId, sets, ...exercise }) => {
+        const completedSets = sets.filter(({ completed }) => completed);
+
+        return {
+          ...exercise,
+          exercise: { id: exerciseId },
+          sets: completedSets,
+        };
+      })
+      .filter(({ sets }) => sets.length > 0);
+
+    const sets = workoutExercises.reduce(
+      (total, exercise) => total + exercise.sets.length,
+      0,
+    );
+
+    const volume = workoutExercises.reduce(
+      (total, exercise) =>
+        total +
+        exercise.sets.reduce(
+          (exerciseVolume, set) => exerciseVolume + set.kg * set.reps,
+          0,
+        ),
+      0,
+    );
+
+    return {
+      workoutExercises,
+      sets,
+      volume,
+    };
   }
 
   private transformWorkout(workout: Workout) {
@@ -109,6 +157,7 @@ export class WorkoutsService {
       volume: workout.volume,
       sets: workout.sets,
       createdAt: workout.createdAt,
+      updatedAt: workout.updatedAt,
       exercises: workout.workoutExercises.map((workoutExercise) => ({
         exerciseId: workoutExercise.exercise.id,
         title: workoutExercise.exercise.title,
