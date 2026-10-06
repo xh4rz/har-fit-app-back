@@ -3,15 +3,14 @@ import {
   Get,
   Post,
   Body,
-  // Patch,
+  Patch,
   Param,
   Delete,
   ParseUUIDPipe,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { WorkoutsService } from './workouts.service';
-import { CreateWorkoutDto } from './dto/create-workout.dto';
-// import { UpdateWorkoutDto } from './dto/update-workout.dto';
+import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { Auth, GetUser } from '@/auth/decorators';
 
 @ApiBearerAuth()
@@ -38,10 +37,13 @@ export class WorkoutsController {
     return this.workoutsService.findOne(id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateWorkoutDto: UpdateWorkoutDto) {
-  //   return this.workoutsService.update(+id, updateWorkoutDto);
-  // }
+  @Patch(':id')
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateWorkoutDto: UpdateWorkoutDto,
+  ) {
+    return this.workoutsService.update(id, updateWorkoutDto);
+  }
 
   @Delete(':id')
   remove(@Param('id', ParseUUIDPipe) id: string) {

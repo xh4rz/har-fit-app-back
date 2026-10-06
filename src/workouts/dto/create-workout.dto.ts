@@ -1,7 +1,6 @@
 import {
   ArrayMinSize,
   IsArray,
-  IsDateString,
   IsInt,
   IsOptional,
   IsString,
@@ -26,9 +25,6 @@ export class CreateWorkoutDto {
   @IsOptional()
   @MaxLength(300)
   description?: string;
-
-  @IsDateString()
-  createdAt: string;
 
   @IsArray()
   @ArrayMinSize(1)

@@ -6,6 +6,7 @@ import {
   JoinColumn,
   CreateDateColumn,
   OneToMany,
+  UpdateDateColumn,
 } from 'typeorm';
 import { User } from '@/users/entities/user.entity';
 import { WorkoutExercise } from './workout-exercise.entity';
@@ -30,8 +31,11 @@ export class Workout {
   @Column('int')
   sets: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
+
+  @UpdateDateColumn({ type: 'timestamptz' })
+  updatedAt: Date;
 
   @OneToMany(
     () => WorkoutExercise,
