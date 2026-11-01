@@ -71,7 +71,7 @@ export class ExercisesService {
 
   async findAll(findAllExercisesDto: FindAllExercisesDto) {
     const {
-      limit = 10,
+      limit = 0,
       offset = 0,
       primaryMuscleId = 0,
       equipmentId = 0,
